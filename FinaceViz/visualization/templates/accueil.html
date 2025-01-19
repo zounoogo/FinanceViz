@@ -1,0 +1,14 @@
+<!--accueil.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Bienvenue sur FinanceViz</h1>
+    <p>Visualisez vos données financières de manière simple et interactive.</p>
+    <p>Utilisez notre plateforme pour suivre les ventes, les dépenses, et bien plus encore.</p>
+    <nav>
+        <ul>
+            <li><a href="{% url 'visualize_tab' %}">Télécharger directement vos données</a></li>
+            <li><a href="{% url 'visualize_csv' %}">Entrer un fichier csv_file</a></li>
+            
+        </ul>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!--visualizationTab.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center">Visualisation des Données</h1>
+        <form id="dataForm" method="POST" enctype="application/x-www-form-urlencoded">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="data" class="form-label">Données (JSON)</label>
+                <textarea class="form-control" id="data" name="data" rows="6" placeholder='[{"Date": "2023-01-01", "Valeur": 100}, {"Date": "2023-01-02", "Valeur": 200}]'></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="chart_type" class="form-label">Type de Graphique</label>
+                <select class="form-select" id="chart_type" name="chart_type">
+                    <option value="line">Ligne</option>
+                    <option value="bar">Barre</option>
+                    <option value="pie">Camembert</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="filter_column" class="form-label">Colonne à Filtrer</label>
+                <input type="text" class="form-control" id="filter_column" name="filter_column" placeholder="Exemple : Date, Valeur">
+            </div>
+            <div class="mb-3">
+                <label for="filter_value" class="form-label">Valeur à Filtrer</label>
+                <input type="text" class="form-control" id="filter_value" name="filter_value" placeholder="Exemple : 2023-01-01">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="download_pdf" name="download_pdf">
+                <label class="form-check-label" for="download_pdf">Télécharger le graphique et le tableau en PDF</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Visualiser</button>
+        </form>
+
+        {% if error %}
+            <div class="alert alert-danger mt-4">{{ error }}</div>
+        {% endif %}
+
+        {% if info %}
+            <div class="alert alert-success mt-4">{{ info }}</div>
+        {% endif %}
+
+        {% if graph %}
+            <div class="mt-4 text-center">
+                <h3>Graphique Généré</h3>
+                <img src="data:image/png;base64,{{ graph }}" alt="Graphique" class="img-fluid">
+            </div>
+        {% endif %}
+
+        {% if table_html %}
+            <div class="mt-4">
+                <h3>Tableau des Données</h3>
+                <div class="table-responsive">
+                    {{ table_html|safe }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
